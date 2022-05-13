@@ -27,6 +27,15 @@ def p(text):
 def clear():
   os.system("clear")
 
+def draw():
+  blindword = []
+  for l in list(w):
+    if l in gw:
+      blindword.append(l + '\u0332')
+    else:
+      blindword.append('_')
+  print('  '.join(blindword))
+
 if b_w69 == False and b_w420 == False:
     p("Kies je galgje editie!" 
    "\n\nKies uit:"
@@ -68,16 +77,7 @@ def chose():
   else:
     p("Dat is geen getal, better luck next time")
     return chose()
-
-def draw():
-  print("true")
-  blindword = []
-  for l in list(w):
-    if l in gw:
-      blindword.append(l + '\u0332')
-    else:
-      blindword.append('_')
-  print('  '.join(blindword))
+time.sleep(2)
 chose()
 clear()
 w = random.choice(wlist)
