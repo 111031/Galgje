@@ -14,6 +14,7 @@ b_w420 = False#if triggered = true
 w9854 = ("ei", "kip", 'schilderij', 'geheim') #easteregg edition
 
 wlist = ''
+w = ''
 
 def p(text):
   for letter in text:
@@ -64,3 +65,29 @@ def chose():
     p("Dat is geen getal, better luck next time")
     return chose()
 chose()
+
+def guess():
+  guess = input()
+  if guess.isaplha():
+    if len(guess) > 1:
+      if guess == w:
+        win
+      else:
+        fail
+    else:
+      if guess in w:
+        reveal
+      else:
+        fail
+      
+def reveal():
+  print("reveal")
+  
+def fail():
+  print("fail")
+  
+def lose():
+  print('lose')
+
+def win():
+  print('win')
