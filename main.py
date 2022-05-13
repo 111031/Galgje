@@ -1,4 +1,5 @@
 import random
+import os
 import time, sys
 
 #standard editions
@@ -15,13 +16,16 @@ w9854 = ("ei", "kip", 'schilderij', 'geheim') #easteregg edition
 
 wlist = ''
 w = ''
+gw = ('w', 't') #guessed letters
 
 def p(text):
   for letter in text:
     sys.stdout.write(letter)
     sys.stdout.flush()
     time.sleep(0.007)
-    
+
+def clear():
+  os.system("clear")
 
 if b_w69 == False and b_w420 == False:
     p("Kies je galgje editie!" 
@@ -64,21 +68,38 @@ def chose():
   else:
     p("Dat is geen getal, better luck next time")
     return chose()
+
+def draw():
+  print("true")
+  blindword = []
+  for l in list(w):
+    if l in gw:
+      blindword.append(l + '\u0332')
+    else:
+      blindword.append('_')
+  print('  '.join(blindword))
 chose()
+clear()
+w = random.choice(wlist)
+print(w)
+draw()
+
+
+      
 
 def guess():
   guess = input()
   if guess.isaplha():
     if len(guess) > 1:
       if guess == w:
-        win
+        win()
       else:
-        fail
+        fail()
     else:
       if guess in w:
-        reveal
+        reveal()
       else:
-        fail
+        fail()
       
 def reveal():
   print("reveal")
