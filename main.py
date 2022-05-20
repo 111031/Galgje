@@ -98,7 +98,11 @@ def lose():
   print('lose')
 
 def win():
-  print('win')
+  clear()
+  print(f'Je hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
+  replay = input()
+  if replay == "ja":
+    print("ja")
 
 
 def guess(): #check if letter/word is matching
