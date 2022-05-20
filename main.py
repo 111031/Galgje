@@ -1,3 +1,4 @@
+from gc import freeze
 import random
 import os
 import time, sys
@@ -29,18 +30,20 @@ def p(text): #animated text
 def clear(): #clear console
   os.system("clear")
 
-if b_w69 == False and b_w420 == False:
-    p("Kies je galgje editie!" 
-   "\n\nKies uit:"
-   "\n\n1 School"
-   "\n2 Verkeer\n")
-else:
-    p("Kies je galgje editie!" 
-   "\n\nKies uit:"
-   "\n\n1    School"
-   "\n2    Verkeer"
-   "\n9854 ???\n")
+def editiebegin():
+  if b_w69 == False and b_w420 == False:
+      p("Kies je galgje editie!" 
+    "\n\nKies uit:"
+    "\n\n1 School"
+    "\n2 Verkeer\n")
+  else:
+      p("Kies je galgje editie!" 
+    "\n\nKies uit:"
+    "\n\n1    School"
+    "\n2    Verkeer"
+    "\n9854 ???\n")
 
+editiebegin()
 
 def chose(): #chose edition
   global wlist, b_w69, b_w420
@@ -112,7 +115,12 @@ def win():
   print(f'Je hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
   replay = input()
   if replay == "ja":
-    print("ja")
+    return editiebegin()
+  elif replay == "nee":
+    print("jammer weer dit :(")
+    quit
+  else:
+    return
 
 
 def guess(): #check if letter/word is matching
