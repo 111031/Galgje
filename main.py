@@ -16,14 +16,15 @@ w9854 = ("ei", "kip", 'schilderij', 'geheim') #easteregg edition
 
 wlist = '' #chosen word list
 w = '' #word
-gw = [] #guessed letters
+gl = ['t', 'g'] #guessed letters/words
+gw = ['toot']
 lives = 13
 
 def p(text): #animated text
-  for letter in text:
-    sys.stdout.write(letter)
+  for l in text:
+    sys.stdout.write(l)
     sys.stdout.flush()
-    time.sleep(0.007)
+    time.sleep(0.07)
 
 def clear(): #clear console
   os.system("clear")
@@ -79,12 +80,21 @@ def draw(): #print state of game
   blindedword = []
   p(f'Type een letter of een woord om het woord te raden.\n\nlevens over: {lives}\n')
   for l in list(w):
-    if l in gw:
+    if l in gl:
       blindedword.append(l + '\u0332')
     else:
       blindedword.append('_')
   p('  '.join(blindedword))
-  print('\n')
+  p('\n\nFout geraden letters: ')
+  wgl = [] # wrong guessed letters
+  for l in gl:
+    if l not in w:
+      wgl.append(l)
+  p(', '.join(wgl))
+  p('\n')
+  p('Fout geraden woorden: ')
+  p(', '.join(gw))
+  p('\n')
 draw()
 
 
@@ -104,18 +114,22 @@ def win():
 def guess(): #check if letter/word is matching
   guess = input().lower()
   if guess.isalpha():
-    if len(guess) > 1:
-      if guess == w:
-        win()
+    if guess not in gl or guess not in gw:
+      if len(guess) > 1:
+        if guess == w:
+          win()
+        else:
+          fail()
       else:
-        fail()
+        if guess in w:
+          reveal()
+        else:
+          fail()
     else:
-      if guess in w:
-        reveal()
-      else:
-        fail()
+      p("Dit heb je al een keer geprobeerd te raden. Probeer een andere letter of woord.")
   else:
     p("Dat is geen letter of woord, better luck next time\n")
+    return guess()
 guess()
 
 
