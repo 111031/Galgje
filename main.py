@@ -18,7 +18,7 @@ wlist = '' #chosen word list
 w = '' #word
 gl = ['t', 'g'] #guessed letters/words
 gw = ['toot']
-lives = 13
+lives = 5
 
 def p(text): #animated text
   for l in text:
@@ -78,40 +78,6 @@ clear()
 w = random.choice(wlist) #chose word
 print(w)
 
-def draw(): #print state of game
-  blindedword = []
-  p(f'Type een letter of een woord om het woord te raden.\n\nlevens over: {lives}\n')
-  for l in list(w):
-    if l in gl:
-      blindedword.append(l + '\u0332')
-    else:
-      blindedword.append('_')
-  p('  '.join(blindedword))
-  p('\n\nFout geraden letters: ')
-  wgl = [] # wrong guessed letters
-  for l in gl:
-    if l not in w:
-      wgl.append(l)
-  p(', '.join(wgl))
-  p('\n')
-  p('Fout geraden woorden: ')
-  p(', '.join(gw))
-  p('\n')
-draw()
-
-
-def reveal():
-  print("reveal")
-  
-def fail(guess):
-  if len(guess) >= 1:
-    gw = gw + guess
-  else:
-    gl = gl + guess
-  clear()
-  print("Deze letter zit helaas niet in het woord :(")
-  return draw()
-  
 def lose():
   clear()
   print(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
@@ -138,6 +104,20 @@ def win():
     print("je hebt geen ja of nee ingetypt")
     return
 
+def reveal():
+  print("reveal")
+  
+def fail(guess):
+  if len(guess) >= 2:
+    gw.append(guess)
+  else:
+    gl.append(guess)
+  lives - 1
+  if lives == 0:
+    lose()
+  clear()
+  print("Deze letter zit helaas niet in het woord :(")
+  return draw()
 
 def guess(): #check if letter/word is matching
   guess = input().lower()
@@ -158,6 +138,25 @@ def guess(): #check if letter/word is matching
   else:
     p("Dat is geen letter of woord, better luck next time\n")
     return guess()
-guess()
 
-
+def draw(): #print state of game
+  blindedword = []
+  p(f'Type een letter of een woord om het woord te raden.\n\npogingen over: {lives}\n')
+  for l in list(w):
+    if l in gl:
+      blindedword.append(l + '\u0332')
+    else:
+      blindedword.append('_')
+  p('  '.join(blindedword))
+  p('\n\nFout geraden letters: ')
+  wgl = [] # wrong guessed letters
+  for l in gl:
+    if l not in w:
+      wgl.append(l)
+  p(', '.join(wgl))
+  p('\n')
+  p('Fout geraden woorden: ')
+  p(', '.join(gw))
+  p('\n')
+  guess()
+draw()
