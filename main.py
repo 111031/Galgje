@@ -103,8 +103,14 @@ draw()
 def reveal():
   print("reveal")
   
-def fail():
-  print("fail")
+def fail(guess):
+  if len(guess) >= 1:
+    gw = gw + guess
+  else:
+    gl = gl + guess
+  clear()
+  print("Deze letter zit helaas niet in het woord :(")
+  return draw()
   
 def lose():
   clear()
@@ -141,12 +147,12 @@ def guess(): #check if letter/word is matching
         if guess == w:
           win()
         else:
-          fail()
+          fail(guess)
       else:
         if guess in w:
           reveal()
         else:
-          fail()
+          fail(guess)
     else:
       p("Dit heb je al een keer geprobeerd te raden. Probeer een andere letter of woord.")
   else:
