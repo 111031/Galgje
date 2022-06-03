@@ -28,61 +28,14 @@ def p(text): #animated text
 
 def clear(): #clear console
   os.system("clear")
-
-def editiebegin():
-  if b_w69 == False and b_w420 == False:
-      p("Kies je galgje editie!" 
-    "\n\nKies uit:"
-    "\n\n1 School"
-    "\n2 Verkeer\n")
-  else:
-      p("Kies je galgje editie!" 
-    "\n\nKies uit:"
-    "\n\n1    School"
-    "\n2    Verkeer"
-    "\n9854 ???\n")
-
-editiebegin()
-
-def chose(): #chose edition
-  global wlist, b_w69, b_w420
-  number = input()
-  if number.isdigit():
-    if int(number) <= len(editions) and int(number) > 0:
-      wlist = editions[int(number)-1]
-      wlistname = editions_names[int(number)-1]
-      p(f"Je hebt voor {wlistname} gekozen")
-      
-      #special editions
-    elif int(number) == 69:
-      wlist = w69
-      b_w69 = True
-      p('Jij viezerik, je vraagt erom!')
-    elif int(number) == 420:
-      wlist = w420
-      b_w420 = True
-      p('Zet een raampje open!\nHet stikt hier van de rook!')
-    elif int(number) == 9854:
-      wlist = w9854
-      p('Elk spel heeft wel een easteregg!')
-      
-    else:
-      p("Deze editie is niet beschikbaar, better luck next time\n")
-      return chose()
-  else:
-    p("Dat is geen getal, better luck next time\n")
-    return chose()
-chose()
-time.sleep(2)
 clear()
-w = random.choice(wlist) #chose word
-print(w)
 
 def lose():
   clear()
   p(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
   replay = input()
   if replay == "ja":
+    clear()
     return editiebegin()
   elif replay == "nee":
     p("jammer weer dit :(")
@@ -92,10 +45,10 @@ def lose():
     return
 
 def win():
-  clear()
-  p(f'Je hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
+  p(f'\nJe hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
   replay = input()
   if replay == "ja":
+    clear()
     return editiebegin()
   elif replay == "nee":
     p("jammer weer dit :(")
@@ -108,20 +61,19 @@ def reveal(guess):
   gl.append(guess)
   if guess == w:
     win()
-  clear()
   p("Deze letter zit in het woord :)")
   return draw()
   
 def fail(guess):
+  global lives
   if len(guess) >= 2:
     gw.append(guess)
   else:
     gl.append(guess)
-  lives - 1
+  lives = lives - 1
   if lives == 0:
     lose()
-  clear()
-  p("Deze letter zit helaas niet in het woord :(")
+  p("Deze letter zit helaas niet in het woord :(\n")
   return draw()
 
 def guess(): #check if letter/word is matching
@@ -142,9 +94,10 @@ def guess(): #check if letter/word is matching
       p("Dit heb je al een keer geprobeerd te raden. Probeer een andere letter of woord.")
   else:
     p("Dat is geen letter of woord, better luck next time\n")
-    return guess()
+    return
 
 def draw(): #print state of game
+  clear()
   blindedword = []
   p(f'Type een letter of een woord om het woord te raden.\n\npogingen over: {lives}\n')
   for l in list(w):
@@ -164,4 +117,54 @@ def draw(): #print state of game
   p(', '.join(gw))
   p('\n')
   guess()
-draw()
+  
+def chose(): #chose edition
+  global wlist, b_w69, b_w420, w
+  number = input()
+  if number.isdigit():
+    if int(number) <= len(editions) and int(number) > 0:
+      wlist = editions[int(number)-1]
+      wlistname = editions_names[int(number)-1]
+      p(f"Je hebt voor {wlistname} gekozen")
+      w = random.choice(wlist) #chose word
+      draw()
+      #special editions
+    elif int(number) == 69:
+      wlist = w69
+      b_w69 = True
+      p('Jij viezerik, je vraagt erom!')
+      w = random.choice(wlist) #chose word
+      draw()
+    elif int(number) == 420:
+      wlist = w420
+      b_w420 = True
+      p('Zet een raampje open!\nHet stikt hier van de rook!')
+      w = random.choice(wlist) #chose word
+      draw()
+    elif int(number) == 9854:
+      wlist = w9854
+      p('Elk spel heeft wel een easteregg!')
+      w = random.choice(wlist) #chose word
+      draw()
+    else:
+      p("Deze editie is niet beschikbaar, better luck next time\n")
+      return
+  else:
+    p("Dat is geen getal, better luck next time\n")
+    return chose()
+    
+def editiebegin():
+  if b_w69 == False and b_w420 == False:
+      p("Kies je galgje editie!" 
+    "\n\nKies uit:"
+    "\n\n1 School"
+    "\n2 Verkeer\n")
+  else:
+      p("Kies je galgje editie!" 
+    "\n\nKies uit:"
+    "\n\n1    School"
+    "\n2    Verkeer"
+    "\n9854 ???\n")
+  chose()
+
+editiebegin()
