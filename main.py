@@ -80,28 +80,28 @@ print(w)
 
 def lose():
   clear()
-  print(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
+  p(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
   replay = input()
   if replay == "ja":
     return editiebegin()
   elif replay == "nee":
-    print("jammer weer dit :(")
+    p("jammer weer dit :(")
     quit
   else:
-    print("je hebt geen ja of nee ingetypt")
+    p("je hebt geen ja of nee ingetypt")
     return
 
 def win():
   clear()
-  print(f'Je hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
+  p(f'Je hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
   replay = input()
   if replay == "ja":
     return editiebegin()
   elif replay == "nee":
-    print("jammer weer dit :(")
+    p("jammer weer dit :(")
     quit
   else:
-    print("je hebt geen ja of nee ingetypt")
+    p("je hebt geen ja of nee ingetypt")
     return
 
 def reveal(guess):
@@ -109,7 +109,7 @@ def reveal(guess):
   if guess == w:
     win()
   clear()
-  print("Deze letter zit in het woord :)")
+  p("Deze letter zit in het woord :)")
   return draw()
   
 def fail(guess):
@@ -121,7 +121,7 @@ def fail(guess):
   if lives == 0:
     lose()
   clear()
-  print("Deze letter zit helaas niet in het woord :(")
+  p("Deze letter zit helaas niet in het woord :(")
   return draw()
 
 def guess(): #check if letter/word is matching
@@ -130,12 +130,12 @@ def guess(): #check if letter/word is matching
     if guess not in gl or guess not in gw:
       if len(guess) > 1:
         if guess == w:
-          win(guess)
+          win()
         else:
           fail(guess)
       else:
         if guess in w:
-          reveal()
+          reveal(guess)
         else:
           fail(guess)
     else:
