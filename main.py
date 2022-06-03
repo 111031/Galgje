@@ -1,4 +1,3 @@
-from gc import freeze
 import random
 import os
 import time, sys
@@ -108,7 +107,17 @@ def fail():
   print("fail")
   
 def lose():
-  print('lose')
+  clear()
+  print(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
+  replay = input()
+  if replay == "ja":
+    return editiebegin()
+  elif replay == "nee":
+    print("jammer weer dit :(")
+    quit
+  else:
+    print("je hebt geen ja of nee ingetypt")
+    return
 
 def win():
   clear()
@@ -120,6 +129,7 @@ def win():
     print("jammer weer dit :(")
     quit
   else:
+    print("je hebt geen ja of nee ingetypt")
     return
 
 
