@@ -104,8 +104,13 @@ def win():
     print("je hebt geen ja of nee ingetypt")
     return
 
-def reveal():
-  print("reveal")
+def reveal(guess):
+  gl.append(guess)
+  if guess == w:
+    win()
+  clear()
+  print("Deze letter zit in het woord :)")
+  return draw()
   
 def fail(guess):
   if len(guess) >= 2:
@@ -125,7 +130,7 @@ def guess(): #check if letter/word is matching
     if guess not in gl or guess not in gw:
       if len(guess) > 1:
         if guess == w:
-          win()
+          win(guess)
         else:
           fail(guess)
       else:
