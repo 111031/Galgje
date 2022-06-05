@@ -21,6 +21,8 @@ gl = [] #guessed letters
 gw = [] #guessed words
 lives = 5
 wins = 0
+gameinprogress = False
+
 
 def p(text): #animated text
   for l in text:
@@ -34,8 +36,9 @@ def clear(): #clear console
 clear()
 
 def lose():
-  clear()
-  p(f'Je hebt helaas verloren\nHet woord was: {w}\nWins deze game: {wins}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee: ')
+  global gameinprogress
+  gameinprogress = False
+  p(f'\nJe hebt helaas verloren\nHet woord was: {w}\nWins deze game: {wins}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee: ')
   replay = input()
   if replay == "ja":
     clear()
@@ -48,7 +51,8 @@ def lose():
     return lose()
 
 def win():
-  global wins
+  global wins, gameinprogress
+  gameinprogress = False
   wins += 1
   p(f'\nJe hebt gewonnen :)\nHet woord was: {w}\nWins deze game: {wins}\nWil je opnieuw spelen typ dan ja zoniet typ nee: ')
   replay = input()
@@ -76,7 +80,6 @@ def reveal(guess):
     if idx == len(w):
       win()
   p("Deze letter zit in het woord :)") 
-  return draw()
   
 def fail(guess):
   global lives
@@ -87,8 +90,8 @@ def fail(guess):
   lives-= 1
   if lives == 0:
     lose()
-  p("Deze letter zit helaas niet in het woord :(\n")
-  return draw()
+  else:
+    p("Deze letter zit helaas niet in het woord :(\n")
 
 def guess(): #check if letter/word is matching
   guess = input().lower()
@@ -106,10 +109,8 @@ def guess(): #check if letter/word is matching
           fail(guess)
     else:
       p("Dit heb je al een keer geprobeerd te raden. Probeer een andere letter of woord.")
-      draw()
   else:
     p("Dat is geen letter of woord, better luck next time\n")
-    draw()
 
 
 def draw(): #print state of game
@@ -136,7 +137,7 @@ def draw(): #print state of game
 
   
 def chose(): #chose edition
-  global wlist, b_w69, b_w420, w
+  global wlist, b_w69, b_w420, w, gameinprogress
   number = input()
   if number.isdigit():
     if int(number) <= len(editions) and int(number) > 0:
@@ -145,6 +146,7 @@ def chose(): #chose edition
       p(f"Je hebt voor {wlistname} gekozen")
       w = random.choice(wlist) #chose word
       draw()
+      gameinprogress = True
       #special editions
     elif int(number) == 69:
       wlist = w69
@@ -152,17 +154,20 @@ def chose(): #chose edition
       p('Jij viezerik, je vraagt erom!')
       w = random.choice(wlist) #chose word
       draw()
+      gameinprogress = True
     elif int(number) == 420:
       wlist = w420
       b_w420 = True
       p('Zet een raampje open!\nHet stikt hier van de rook!')
       w = random.choice(wlist) #chose word
       draw()
+      gameinprogress = True
     elif int(number) == 9854:
       wlist = w9854
       p('Elk spel heeft wel een easteregg!')
       w = random.choice(wlist) #chose word
       draw()
+      gameinprogress = True
     else:
       p("Deze editie is niet beschikbaar, better luck next time\n")
       return
@@ -191,5 +196,7 @@ def editiebegin(): #show editions
     "\n2 School"
     "\n3 Verkeer\n")
   chose()
-
 editiebegin()
+
+while gameinprogress is True:
+  draw()
