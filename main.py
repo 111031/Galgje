@@ -3,10 +3,11 @@ import os
 import time, sys
 
 #standard editions
-wSchool = ("leraal", "tafel", "docenten", "kind", "toetsenbord", "concierge", "geodriehoek", "rekenmachine", "wiskunde", "natuurkunde", "scheikunde", "aardrijkskunde", "gangpad", "lokaal", "schrift", "pen", "potlood", "informatica", "informatica", "informatica")
-wVerkeer = ("stopbord", "ongeluk", "auto", "vrachtwagen", "fiets", 'verkeer')
-editions = (wSchool, wVerkeer)
-editions_names = ("school", "verkeer")
+wOriginal = ("informatica", "informatiekunde", "spelletje", "aardigheidje", "scholier", "fotografie", "waardebepaling", "specialiteit", "verzekering", "universiteit", "heesterperk")
+wSchool = ("leraal", "tafel", "docenten", "kind", "toetsenbord", "concierge", "geodriehoek", "rekenmachine", "wiskunde", "natuurkunde", "scheikunde", "aardrijkskunde", "gangpad", "lokaal", "schrift", "pen", "potlood", "informatica", "tussenuur", "smc")
+wVerkeer = ("stopbord", "ongeluk", "auto", "vrachtwagen", "fiets", "verkeer", "stoplicht", "haaientanden", "rijbewijs", "fietspad", "voorangsweg", "aanhangwagen", "bekeuring", "flitspaal", "aanhouding", "velg", "wielen", "politie", "file", "spits", "ov", "wegmisbruikers", "maloten", "inhaalmanouvre", "trein", "locomotive", "voetganger", "verkeersregeling")
+editions = (wOriginal, wSchool, wVerkeer)
+editions_names = ("Original", "school", "verkeer")
 #special editions
 w69 = ("uwu", 'sex', 'porn')
 b_w69 = False #if triggered = true
@@ -157,14 +158,15 @@ def editiebegin():
   if b_w69 == False and b_w420 == False:
       p("Kies je galgje editie!" 
     "\n\nKies uit:"
-    "\n\n1 School"
-    "\n2 Verkeer\n")
+    "\n\n1 Original"
+    "\n2 School"
+    "\n3 Verkeer\n")
   else:
       p("Kies je galgje editie!" 
     "\n\nKies uit:"
-    "\n\n1    School"
-    "\n2    Verkeer"
-    "\n9854 ???\n")
+    "\n\n1 Original"
+    "\n2 School"
+    "\n3 Verkeer\n")
   chose()
 
 editiebegin()
