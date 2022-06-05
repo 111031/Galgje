@@ -17,23 +17,25 @@ w9854 = ("ei", "kip", 'schilderij', 'geheim') #easteregg edition
 
 wlist = '' #chosen word list
 w = '' #word
-gl = ['t', 'g'] #guessed letters/words
-gw = ['toot']
+gl = [] #guessed letters
+gw = [] #guessed words
 lives = 5
+wins = 0
 
 def p(text): #animated text
   for l in text:
     sys.stdout.write(l)
     sys.stdout.flush()
-    time.sleep(0.07)
+    time.sleep(0.05)
 
 def clear(): #clear console
+  time.sleep(0.2)
   os.system("clear")
 clear()
 
 def lose():
   clear()
-  p(f'Je hebt helaas verloren\nHet woord was : {w}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee:')
+  p(f'Je hebt helaas verloren\nHet woord was: {w}\nWins deze game: {wins}\nWil je het opnieuw proberen typ dan ja, als je dit niet wilt typ dan nee: ')
   replay = input()
   if replay == "ja":
     clear()
@@ -43,10 +45,12 @@ def lose():
     quit
   else:
     p("je hebt geen ja of nee ingetypt")
-    return
+    return lose()
 
 def win():
-  p(f'\nJe hebt gewonnen :)\nHet woord was : {w}\nWil je opnieuw spelen typ dan ja zoniet typ nee:')
+  global wins
+  wins += 1
+  p(f'\nJe hebt gewonnen :)\nHet woord was: {w}\nWins deze game: {wins}\nWil je opnieuw spelen typ dan ja zoniet typ nee: ')
   replay = input()
   if replay == "ja":
     clear()
@@ -56,13 +60,22 @@ def win():
     quit
   else:
     p("je hebt geen ja of nee ingetypt")
-    return
+    return win()
 
 def reveal(guess):
   gl.append(guess)
   if guess == w:
     win()
-  p("Deze letter zit in het woord :)")
+  else:
+    idx = 0
+    for l in list(w):
+      if l in gl:
+        idx = idx + 1
+      else:
+        break
+    if idx == len(w):
+      win()
+  p("Deze letter zit in het woord :)") 
   return draw()
   
 def fail(guess):
@@ -71,7 +84,7 @@ def fail(guess):
     gw.append(guess)
   else:
     gl.append(guess)
-  lives = lives - 1
+  lives-= 1
   if lives == 0:
     lose()
   p("Deze letter zit helaas niet in het woord :(\n")
@@ -80,7 +93,7 @@ def fail(guess):
 def guess(): #check if letter/word is matching
   guess = input().lower()
   if guess.isalpha():
-    if guess not in gl or guess not in gw:
+    if guess not in gl and guess not in gw:
       if len(guess) > 1:
         if guess == w:
           win()
@@ -93,9 +106,11 @@ def guess(): #check if letter/word is matching
           fail(guess)
     else:
       p("Dit heb je al een keer geprobeerd te raden. Probeer een andere letter of woord.")
+      draw()
   else:
     p("Dat is geen letter of woord, better luck next time\n")
-    return
+    draw()
+
 
 def draw(): #print state of game
   clear()
@@ -118,6 +133,7 @@ def draw(): #print state of game
   p(', '.join(gw))
   p('\n')
   guess()
+
   
 def chose(): #chose edition
   global wlist, b_w69, b_w420, w
@@ -153,16 +169,23 @@ def chose(): #chose edition
   else:
     p("Dat is geen getal, better luck next time\n")
     return chose()
+
     
-def editiebegin():
-  if b_w69 == False and b_w420 == False:
-      p("Kies je galgje editie!" 
+def editiebegin(): #show editions
+  global lives
+  gl.clear()
+  gw.clear()
+  lives = 5
+  if b_w69 == True and b_w420 == True:
+    p("Kies je galgje editie!" 
     "\n\nKies uit:"
-    "\n\n1 Original"
-    "\n2 School"
-    "\n3 Verkeer\n")
+    "\n\n1    Original"
+    "\n2    School"
+    "\n3    Verkeer"
+    "\n9854 ???\n")
+      
   else:
-      p("Kies je galgje editie!" 
+    p("Kies je galgje editie!" 
     "\n\nKies uit:"
     "\n\n1 Original"
     "\n2 School"
